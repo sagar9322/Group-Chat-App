@@ -14,7 +14,7 @@ async function getUserDetail(event) {
             
             const token = response.data.token;
             localStorage.setItem("token", token);
-            window.location.href = "../HTML/login.html";
+            window.location.href = "../HTML/chatwindow.html";
             
         });
         if (response.status === 200) {

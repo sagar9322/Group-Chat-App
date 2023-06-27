@@ -5,15 +5,16 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     
   }
   
   .user-list {
     width: 200px;
     padding: 20px;
-    background-color: #bbf5f7;
+    background-color: #eef7f7;
     box-shadow: 0 0 10px rgb(51, 166, 243);
+    border-radius: 10px;
   }
   
   .user-list h2 {
@@ -36,12 +37,14 @@ body{
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgb(51, 166, 243);
+    border-radius: 10px;
+    
   }
   
   .messages {
     height: 300px;
     overflow-y: scroll;
-    background-color: rgb(104, 211, 230);
+    background-color: rgb(253, 255, 255);
     box-shadow: 0 0 10px rgb(51, 166, 243);
   }
   

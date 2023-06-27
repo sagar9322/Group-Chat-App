@@ -26,10 +26,12 @@
         <!-- Add more messages dynamically using JavaScript -->
       </div>
       <div class="input-box">
-        <input type="text" placeholder="Type your message..." />
-        <button>Send</button>
+        <input type="text" id="message" placeholder="Type your message..." />
+        <button onclick="sendMessage(event)">Send</button>
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../JS/chatwindow.js"></script>
 </body>
 </html>
