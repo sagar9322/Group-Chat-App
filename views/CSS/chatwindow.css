@@ -1,0 +1,73 @@
+body{
+    background-image: url('https://cdn.dribbble.com/users/1003944/screenshots/15741863/media/96a2668dbf0b4da82efca00d60011ca8.gif');
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+  }
+  
+  .user-list {
+    width: 200px;
+    padding: 20px;
+    background-color: #bbf5f7;
+    box-shadow: 0 0 10px rgb(51, 166, 243);
+  }
+  
+  .user-list h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .user-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-list li {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .chat-window {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgb(51, 166, 243);
+  }
+  
+  .messages {
+    height: 300px;
+    overflow-y: scroll;
+    background-color: rgb(104, 211, 230);
+    box-shadow: 0 0 10px rgb(51, 166, 243);
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #bbf5f7;
+  }
+  
+  .message p {
+    margin: 0;
+  }
+  
+  .input-box {
+    margin-top: 10px;
+  }
+  
+  .input-box input[type="text"] {
+    width: 70%;
+    padding: 5px;
+  }
+  
+  .input-box button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
