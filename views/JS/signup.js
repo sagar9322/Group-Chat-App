@@ -20,6 +20,7 @@ async function submitUserDetails(event) {
         document.getElementById('name-ip').value = "";
         document.getElementById('email-ip').value = "";
         document.getElementById('password-ip').value = "";
+        document.getElementById('phone-ip').value = "";
         document.getElementById('error-heading').textContent = "";
         var checkbox = document.querySelector('.checkbox');
         checkbox.checked = false;
@@ -30,6 +31,7 @@ async function submitUserDetails(event) {
             document.getElementById('name-ip').value = "";
             document.getElementById('email-ip').value = "";
             document.getElementById('password-ip').value = "";
+            document.getElementById('phone-ip').value = "";
             var checkbox = document.querySelector('.checkbox');
             checkbox.checked = false;
         } else {
