@@ -7,6 +7,7 @@ const userChatController = require('../controllers/userchat');
 
 
 router.post('/chat/message', userAuthentication.authenticate, userChatController.submitChat);
+router.get('/chat/get-msg', userChatController.getAllMessages);
 
 
 module.exports = router;

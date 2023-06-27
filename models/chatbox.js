@@ -13,6 +13,10 @@ const ChatBox = sequelize.define('chatbox', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
   message: {
     type: Sequelize.STRING(1000),
