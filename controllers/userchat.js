@@ -1,5 +1,6 @@
 const ChatBox = require('../models/chatbox');
 const User = require('../models/signup');
+const { Op } = require('sequelize');
 
 
 exports.submitChat = async (req, res, next) => {
@@ -22,13 +23,30 @@ try{
 
 exports.getAllMessages = async (req, res, next) => {
 
-    try{
-        const allMessage = await ChatBox.findAll();
+    const { timestamp } = req.query; // Get the timestamp parameter from the request query
+    console.log(timestamp)
 
-        res.status(200).json({data:allMessage, success:true});
-    }catch(err) {
-        console.error("somthing went wrong", err);
-        res.status('404').json({success:false});
+    try {
+        let messages;
+
+        if (timestamp) {
+            // Fetch messages newer than the provided timestamp
+            messages = await ChatBox.findAll({
+                where: {
+                    createdAt: {
+                        [Op.gt]: timestamp // Use greater than (>) operator to filter messages by timestamp
+                    }
+                }
+            });
+        } else {
+            // Fetch all messages if no timestamp is provided
+            messages = await ChatBox.findAll();
+        }
+
+        res.status(200).json({ data: messages, success: true });
+    } catch (err) {
+        console.error("Something went wrong:", err);
+        res.status(404).json({ success: false });
     }
     
 }
