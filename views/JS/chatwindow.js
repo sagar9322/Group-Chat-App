@@ -8,40 +8,42 @@ async function sendMessage(event) {
         'Content-Type': 'application/json'
     };
 
-    try{
-        const response = await axios.post('http://localhost:3000/chat/message', {message:message}, { headers });
+    try {
+        const response = await axios.post('http://localhost:3000/chat/message', { message: message }, { headers });
 
         getMessages();
-    }catch(err){
+    } catch (err) {
         console.error('Error Sending Chat:', err);
     }
 
 }
 
 
-async function getMessages(){
-    
-try{
-    const response = await axios.get('http://localhost:3000/chat/get-msg');
-    const messages = response.data.data;
+async function getMessages() {
 
-    const messagesContainer = document.querySelector('.messages');
-    messagesContainer.innerHTML = ''; // Clear existing messages
+    try {
+        const response = await axios.get('http://localhost:3000/chat/get-msg');
+        const messages = response.data.data;
 
-    messages.forEach(message => {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message');
+        const messagesContainer = document.querySelector('.messages');
+        messagesContainer.innerHTML = ''; // Clear existing messages
 
-      const paragraphElement = document.createElement('p');
-      paragraphElement.textContent = `${message.username}: ${message.message}`;
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
 
-      messageElement.appendChild(paragraphElement);
-      messagesContainer.appendChild(messageElement);
-    });
-}catch(err) {
-    console.error("somthing went wrong", err);
+            const paragraphElement = document.createElement('p');
+            paragraphElement.textContent = `${message.username}: ${message.message}`;
+
+            messageElement.appendChild(paragraphElement);
+            messagesContainer.appendChild(messageElement);
+        });
+    } catch (err) {
+        console.error("somthing went wrong", err);
+    }
+
 }
-    
-}
+
+setInterval(getMessages, 1000);
 
 window.addEventListener("DOMContentLoaded", getMessages());
