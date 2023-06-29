@@ -110,17 +110,58 @@ async function getUserList(groupid) {
     try {
         const response = await axios.post('http://localhost:3000/chat/user', {groupId: groupid}, {headers});
         const userList = response.data.members;
+        
+        const adminId = response.data.admin;
+        const superAdminId = response.data.superAdminId;
+        const adminid = adminId.map(admin=> admin.memberId);
 
         const userContainer = document.querySelector('.user-list');
         userContainer.innerHTML = ''; // Clear existing user list
 
         userList.forEach(user => {
             const userItem = document.createElement('li');
-            userItem.textContent = user.name.toUpperCase();
-            userItem.addEventListener('click', () => {
-                // Handle user click event
+            if(user.id === superAdminId){
+                userItem.textContent = `Super Admin: ${user.name.toUpperCase()}`;
+            }
+            else if(adminid.includes(user.id)){
+                userItem.textContent = `Admin: ${user.name.toUpperCase()}`;
+            }else{
+                userItem.textContent = user.name.toUpperCase();
+            }
+            userItem.addEventListener('click', async () => {
+                if (user.id === adminId) {
+                    return; // Skip event handling for admin user
+                }
+                const confirmDialog = confirm("Do you want to make him/her an admin?");
+                      if (confirmDialog) {
+                        const groupId = localStorage.getItem('groupId');
+                        const userId = user.id;
+
+                        await axios.post('http://localhost:3000/user/make-admin', {groupId: groupId, userId: userId}, {headers
+                    });
+                        
+                        }
+            });
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'X';
+            deleteButton.addEventListener('click', async () => {
+                const confirmDialog = confirm(`Are you sure you want to delete ${user.name}?`);
+                if (confirmDialog) {
+                    try {
+                        const groupId = localStorage.getItem('groupId');
+                        const userId = user.id;
+                        // Send delete request to server
+                        await axios.post('http://localhost:3000/user/delete', { groupId: groupId, userId: user.id }, { headers });
+
+                        // Remove the user element from the user list UI
+                        userContainer.removeChild(userItem);
+                    } catch (error) {
+                        console.error('Error deleting user:', error);
+                    }
+                }
             });
 
+            userItem.appendChild(deleteButton);
             userContainer.appendChild(userItem);
         });
     } catch (error) {

@@ -15,6 +15,8 @@ router.post('/chat/send-request', userAuthentication.authenticate, userChatContr
 router.post('/chat/pending-requests', userAuthentication.authenticate, userChatController.checkPendingRequest);
 router.post('/chat/accept-request/:requestId', userChatController.addToGroupMember);
 router.post('/chat/reject-request/:requestId', userChatController.deleteRequest);
-router.get('/chat/userList', userChatController.getAllUserList)
+router.get('/chat/userList', userChatController.getAllUserList);
+router.post('/user/make-admin', userAuthentication.authenticate, userChatController.makeAdmin);
+router.post('/user/delete', userAuthentication.authenticate, userChatController.deleteMember);
 
 module.exports = router;

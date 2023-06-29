@@ -58,6 +58,7 @@ exports.getAllMessages = async (req, res, next) => {
 exports.getUserList = async (req, res, next) => {
     const groupId = req.body.groupId;
     try {
+        const superAdmin = await Group.findOne({where: {Id: groupId}});
         const members = await GroupMembers.findAll({
             where: {
                 groupId: groupId
@@ -65,6 +66,8 @@ exports.getUserList = async (req, res, next) => {
         });
         // Extract group IDs from members array
         const memberIds = members.map(member => member.memberId);
+        const admin = members.filter(member => member.isAdmin===true);
+        
 
         // Fetch groups based on the extracted group IDs
         const member = await User.findAll({
@@ -73,7 +76,7 @@ exports.getUserList = async (req, res, next) => {
             }
         });
 
-        res.status(200).json({ members: member, success: true });
+        res.status(200).json({ members: member, success: true, admin: admin, superAdminId: superAdmin.createdId });
     } catch (err) {
         console.error("somthing went wrong", err);
     }
@@ -212,6 +215,41 @@ exports.getAllUserList = async (req, res, next)=> {
 
         res.status(200).json({ users: users, success: true });
     } catch (err) {
+        console.error("somthing went wrong", err);
+    }
+}
+
+exports.makeAdmin = async (req, res, next)=> {
+    const groupId = req.body.groupId;
+    const userId = req.body.userId;
+    try{
+        const member = await GroupMembers.findOne({where: {
+            groupId: groupId,
+            memberId: userId
+        }});
+    
+        await member.update({
+            isAdmin:true
+        });
+        res.status(200).json({success: true});
+    }catch (err) {
+        console.error("somthing went wrong", err);
+    }
+    
+}
+
+exports.deleteMember = async (req, res, next) => {
+    const groupId = req.body.groupId;
+    const userId = req.body.userId;
+    try{
+        const member = await GroupMembers.findOne({where: {
+            groupId: groupId,
+            memberId: userId
+        }});
+    
+        await member.destroy();
+        res.status(200).json({success: true});
+    }catch (err) {
         console.error("somthing went wrong", err);
     }
 }
