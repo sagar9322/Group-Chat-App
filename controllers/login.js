@@ -1,6 +1,7 @@
 const User = require('../models/signup');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 
 function generateAccessToken(id) {
@@ -24,7 +25,7 @@ exports.getUserDetail = async (req, res, next) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (passwordMatch) {
-            return res.status(200).json({ message: 'Login Successfully', token: generateAccessToken(user.id) });
+            return res.status(200).json({ message: 'Login Successfully', token: generateAccessToken(user.id), username:user.name });
         } else {
             return res.status(401).json({ message: "Password is incorrect" });
         }

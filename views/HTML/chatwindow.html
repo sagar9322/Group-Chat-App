@@ -6,31 +6,66 @@
 </head>
 <body>
   <div class="container">
-    <div class="user-list">
-      <h2>Users</h2>
-      <ul>
-        <li>User 1</li>
-        <li>User 2</li>
-        <li>User 3</li>
-        <!-- Add more users dynamically using JavaScript -->
-      </ul>
-    </div>
+ <button id="manu" onclick="showManuBar()">=</button>
+ <div id="manu-bar">
+  <button id="create-group">Create Group</button>
+
+  <div class="group-list-container">
+    <h2>Groups</h2>
+    <ul class="group-list">
+      
+      <!-- will Add more users dynamically using JavaScript -->
+    </ul>
+  </div>
+
+  <div class="user-list-container">
+    <h2 class="group-member">Group Member</h2>
+    <ul class="user-list">
+      <!-- will Add more users dynamically using JavaScript -->
+    </ul>
+  </div>
+  <button id="invite-friend">Invite Friend</button>
+  <button id="request-pending" onclick="showPendingRequests()">Pending Request..</button>
+ </div>
     <div class="chat-window">
       <div class="messages">
         <div class="message">
-          <p>User 1: Hello!</p>
-        </div>
-        <div class="message">
-          <p>User 2: Hi!</p>
-        </div>
-        <!-- Add more messages dynamically using JavaScript -->
+        <!-- will Add more messages dynamically using JavaScript -->
+      </div>
       </div>
       <div class="input-box">
         <input type="text" id="message" placeholder="Type your message..." />
         <button onclick="sendMessage(event)">Send</button>
       </div>
     </div>
+    
   </div>
+  <div id="create-group-form" class="create-group-form hidden">
+    <h2>Create Group</h2>
+    <form>
+      <label for="group-name">Group Name:</label>
+      <input type="text" id="group-name" placeholder="Enter group name" />
+      <button type="submit">Create</button>
+    </form>
+  </div>
+  <div id="request-form" class="request-form hidden">
+    <h2>Invite Friends</h2>
+    <form>
+      <label for="user-list">Friend List:</label>
+      <ul id="user-list">
+        <!-- User checkboxes will be dynamically added here -->
+      </ul>
+      <button type="submit" id="invite-button">Invite</button>
+    </form>
+  </div>
+
+ 
+<div id="request-window" class="request-window hidden">
+  <h2>Pending Requests</h2>
+  <div id="request-list">
+    <!-- Request items will be dynamically added here -->
+  </div>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../JS/chatwindow.js"></script>
 </body>
