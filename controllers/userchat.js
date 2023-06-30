@@ -84,6 +84,7 @@ exports.getUserList = async (req, res, next) => {
 
 exports.createGroup = async (req, res, next) => {
     const groupName = req.body.groupName;
+    console.log("><><", groupName)
 
     const response = await Group.create({
         createdId: req.user.id,

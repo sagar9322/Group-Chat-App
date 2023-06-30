@@ -3,51 +3,68 @@
 <head>
   <title>Group Chat App</title>
   <link rel="stylesheet" type="text/css" href="../CSS/chatwindow.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
 </head>
 <body>
   <div class="container">
- <button id="manu" onclick="showManuBar()">=</button>
- <div id="manu-bar">
-  <button id="create-group">Create Group</button>
+    <div class="side-bar">
+      <div class="header">
+        <h1>Group Chat</h1>
+        <button id="manu">&#9776;</button>
+      </div>
+      <div id="manu-bar">
+        <button id="create-group">Create Group</button>
 
-  <div class="group-list-container">
-    <h2>Groups</h2>
-    <ul class="group-list">
-      
-      <!-- will Add more users dynamically using JavaScript -->
-    </ul>
-  </div>
+        <div class="group-list-container">
+          <h2>Groups</h2>
+          <ul class="group-list">
+            <!-- will Add more users dynamically using JavaScript -->
+          </ul>
+        </div>
 
-  <div class="user-list-container">
-    <h2 class="group-member">Group Member</h2>
-    <ul class="user-list">
-      <!-- will Add more users dynamically using JavaScript -->
-    </ul>
-  </div>
-  <button id="invite-friend">Invite Friend</button>
-  <button id="request-pending" onclick="showPendingRequests()">Pending Request..</button>
- </div>
+        <div class="user-list-container">
+          <h2 class="group-member">Group Members</h2>
+          <ul class="user-list">
+            <!-- will Add more users dynamically using JavaScript -->
+          </ul>
+        </div>
+        <h2 class="group-member">Other Features</h2>
+        <button id="invite-friend">Invite Friend</button>
+        <button id="request-pending" onclick="showPendingRequests()">Pending Requests</button>
+      </div>
+    </div>
+
     <div class="chat-window">
+      <div class="header">
+        <h2 id="group-name-header">Home</h2>
+      </div>
       <div class="messages">
         <div class="message">
-        <!-- will Add more messages dynamically using JavaScript -->
+          <div class="home-message">
+            <div class="content-msg">
+          <h3>Welcome to our Group Chat App!</h3>
+          <p>Join our vibrant community and connect with people from all around the world. Share ideas, have meaningful conversations, and make new friends.</p>
+        </div>
       </div>
+        </div>
       </div>
-      <div class="input-box">
+      <div class="input-box hidden">
         <input type="text" id="message" placeholder="Type your message..." />
         <button onclick="sendMessage(event)">Send</button>
       </div>
     </div>
-    
   </div>
+
   <div id="create-group-form" class="create-group-form hidden">
     <h2>Create Group</h2>
     <form>
       <label for="group-name">Group Name:</label>
       <input type="text" id="group-name" placeholder="Enter group name" />
       <button type="submit">Create</button>
+      <button type="button" id="delete-button-creategroup-form">Close</button>
     </form>
   </div>
+
   <div id="request-form" class="request-form hidden">
     <h2>Invite Friends</h2>
     <form>
@@ -56,16 +73,19 @@
         <!-- User checkboxes will be dynamically added here -->
       </ul>
       <button type="submit" id="invite-button">Invite</button>
+      <button type="button" id="delete-button-request-form">Close</button>
     </form>
   </div>
 
- 
-<div id="request-window" class="request-window hidden">
-  <h2>Pending Requests</h2>
-  <div id="request-list">
-    <!-- Request items will be dynamically added here -->
+  <div id="request-window" class="request-window hidden">
+    <h2>Pending Requests</h2>
+    <div id="request-list">
+      <!-- Request items will be dynamically added here -->
+      
+    </div>
+    <button type="button" id="delete-button-group-form">Close</button>
   </div>
-</div>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../JS/chatwindow.js"></script>
 </body>

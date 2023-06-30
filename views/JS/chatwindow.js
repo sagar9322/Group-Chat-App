@@ -86,19 +86,6 @@ function toggleUserList() {
 }
 
 
-function showManuBar() {
-    if (document.getElementById('manu-bar').style.display == "flex") {
-        document.getElementById('manu-bar').style.display = "none";
-        document.querySelector('.chat-window').style.width = "100%";
-        document.querySelector('.input-box').style.width = "100%";
-        document.getElementById('message').style.width = "100%";
-    } else {
-        document.getElementById('manu-bar').style.display = "flex";
-        document.querySelector('.chat-window').style.width = "75%";
-        document.querySelector('.input-box').style.width = "78%";
-        document.getElementById('message').style.width = "86%";
-    }
-}
 
 async function getUserList(groupid) {
     const token = localStorage.getItem("token");
@@ -121,12 +108,12 @@ async function getUserList(groupid) {
         userList.forEach(user => {
             const userItem = document.createElement('li');
             if(user.id === superAdminId){
-                userItem.textContent = `Super Admin: ${user.name.toUpperCase()}`;
+                userItem.textContent = `Super Admin: ${user.name}`;
             }
             else if(adminid.includes(user.id)){
-                userItem.textContent = `Admin: ${user.name.toUpperCase()}`;
+                userItem.textContent = `Admin: ${user.name}`;
             }else{
-                userItem.textContent = user.name.toUpperCase();
+                userItem.textContent = user.name;
             }
             userItem.addEventListener('click', async () => {
                 if (user.id === adminId) {
@@ -143,7 +130,11 @@ async function getUserList(groupid) {
                         }
             });
             const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-member');
             deleteButton.textContent = 'X';
+            deleteButton.style.fontSize = '12px';
+            deleteButton.style.width = "20px";
+            
             deleteButton.addEventListener('click', async () => {
                 const confirmDialog = confirm(`Are you sure you want to delete ${user.name}?`);
                 if (confirmDialog) {
@@ -160,7 +151,6 @@ async function getUserList(groupid) {
                     }
                 }
             });
-
             userItem.appendChild(deleteButton);
             userContainer.appendChild(userItem);
         });
@@ -187,17 +177,21 @@ async function getGroupList() {
 
         groupList.forEach(group => {
             const groupItem = document.createElement('li');
-            groupItem.textContent = group.groupName.toUpperCase();
+            groupItem.textContent = group.groupName;
             const groupId = group.id;
+            const groupName = group.groupName;
             groupItem.addEventListener('click', () => {
+                document.querySelector('.input-box').classList.remove('hidden');
                 localStorage.setItem('groupId', groupId);
                 const groupid = localStorage.getItem('groupId')
+                document.getElementById('group-name-header').textContent = `${groupName}`;
+                document.getElementById('group-name').style.color = '#1dd335';
                 getUserList(groupid);
-                const activeGroupItem = document.querySelector('.group-list .active');
+                const activeGroupItem = document.querySelector('.group-list .active-list');
                 if (activeGroupItem) {
-                    activeGroupItem.classList.remove('active');
+                    activeGroupItem.classList.remove('active-list');
                 }
-                groupItem.classList.add('active');
+                groupItem.classList.add('active-list');
                 getMessages(groupId);
             });
 
@@ -226,6 +220,8 @@ function hideCreateGroupForm() {
     createGroupForm.classList.add('hidden');
     container.classList.remove('blur');
 }
+const deleteButtonCreateGroupForm = document.getElementById('delete-button-creategroup-form');
+deleteButtonCreateGroupForm.addEventListener('click', hideCreateGroupForm);
 
 // Event listener for the create group button
 const createGroupButton = document.getElementById('create-group');
@@ -249,12 +245,7 @@ createGroupForm.addEventListener('submit', async (e) => {
 //     getMessages();
 // }, 1000);
 
-window.addEventListener("DOMContentLoaded", async () => {
-    await saveToLocalStorage();
-    const groupId = localStorage.getItem('groupId');
-    getMessages(groupId);
 
-});
 
 
 // Function to show the create group form and blur the background
@@ -282,6 +273,9 @@ const submitBtn = document.querySelector('#invite-button');
 submitBtn.addEventListener('submit', ()=> {
     hideRequestForm();
 })
+
+const deleteButton = document.getElementById('delete-button-request-form');
+deleteButton.addEventListener('click', hideRequestForm);
 
 
 // Function to retrieve user list
@@ -358,6 +352,8 @@ function showPendingRequests() {
     requestWindow.classList.add('hidden');
     container.classList.remove('blur');
   }
+  const deleteButtonGroupForm = document.getElementById('delete-button-group-form');
+deleteButtonGroupForm.addEventListener('click', hidePendingRequests);
   
   // Accept a request
   async function acceptRequest(requestId) {
@@ -427,11 +423,3 @@ function showPendingRequests() {
     }
   }
   displayPendingRequests();
-  
-  // Initialize the pending requests
-//   async function initializePendingRequests() {
-//     await displayPendingRequests();
-//     setInterval(displayPendingRequests, 5000); // Refresh pending requests every 5 seconds
-//   }
-  
-//   window.addEventListener('DOMContentLoaded', initializePendingRequests);
