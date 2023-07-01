@@ -26,35 +26,6 @@ exports.submitChat = async (req, res, next) => {
 }
 
 
-exports.getAllMessages = async (req, res, next) => {
-
-    const { timestamp } = req.query; // Get the timestamp parameter from the request query
-
-    try {
-        let messages;
-
-        if (timestamp) {
-            // Fetch messages newer than the provided timestamp
-            messages = await ChatBox.findAll({
-                where: {
-                    createdAt: {
-                        [Op.gt]: timestamp // Use greater than (>) operator to filter messages by timestamp
-                    }
-                }
-            });
-        } else {
-            // Fetch all messages if no timestamp is provided
-            messages = await ChatBox.findAll();
-        }
-
-        res.status(200).json({ data: messages, success: true });
-    } catch (err) {
-        console.error("Something went wrong:", err);
-        res.status(404).json({ success: false });
-    }
-
-}
-
 exports.getUserList = async (req, res, next) => {
     const groupId = req.body.groupId;
     try {
@@ -82,9 +53,38 @@ exports.getUserList = async (req, res, next) => {
     }
 }
 
+exports.getAllMessages = async (req, res, next) => {
+    const { groupId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    try {
+        const totalCount = await ChatBox.count({ where: { groupId } });
+
+        const totalPages = Math.ceil(totalCount / limit);
+
+        let offset = (page - 1) * limit;
+
+        if (offset < 0) {
+            offset = 0;
+        }
+
+        const messages = await ChatBox.findAll({
+            where: { groupId },
+            order: [['createdAt', 'DESC']],
+            limit,
+            offset
+        });
+
+        res.status(200).json({ messages, totalPages });
+    } catch (err) {
+        console.error("Something went wrong", err);
+    }
+}
+
 exports.createGroup = async (req, res, next) => {
     const groupName = req.body.groupName;
-    console.log("><><", groupName)
+    
 
     const response = await Group.create({
         createdId: req.user.id,
@@ -202,7 +202,7 @@ exports.deleteRequest = async (req, res, next) => {
         if (request) {
             request.destroy();
         }
-
+        res.status(200).json({success:true});
     } catch (err) {
         console.error("somthing went wrong", err);
     }

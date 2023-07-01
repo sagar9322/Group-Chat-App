@@ -107,6 +107,27 @@ li{
   overflow-y: auto;
 }
 
+.group-list::-webkit-scrollbar {
+  width: 5px; /* Width of the scroll bar */
+}
+
+.group-list::-webkit-scrollbar-track {
+  background: #f8f9fa; /* Background color of the scroll bar track */
+}
+
+.group-list::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scroll bar thumb */
+  border-radius: 4px; /* Rounded corners of the scroll bar thumb */
+}
+
+.group-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scroll bar thumb on hover */
+}
+
+.group-list::-webkit-scrollbar-thumb:active {
+  background-color: #333; /* Color of the scroll bar thumb when active */
+}
+
 .group-list li,
 .user-list li {
   padding: 10px;
@@ -325,3 +346,62 @@ animation: fadeInUp 1s ease-in-out; /* Add animation */
   padding: 20px;
   background-color: #f2f2f2;
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ddd;
+}
+
+#typing-indicator {
+  margin-right: 10px;
+  font-size: 12px;
+  color: #2cb81f;
+}
+
+.arrows{
+  display: none;
+}
+.up-arrow,
+    .down-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background-color: #ddd;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .up-arrow:hover,
+    .down-arrow:hover {
+      background-color: #ccc;
+    }
+
+    .up-arrow::before {
+      content: '';
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      border-color: #333;
+      transform: rotate(-45deg);
+      width: 0.5em;
+      height: 0.5em;
+    }
+
+    .down-arrow::before {
+      content: '';
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      border-color: #333;
+      transform: rotate(135deg);
+      width: 0.5em;
+      height: 0.5em;
+    }
+
+    #invite-friend, #request-pending, .group-member{
+      display: none;
+    }
