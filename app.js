@@ -8,6 +8,7 @@ const ChatBox = require('./models/chatbox');
 const Group = require('./models/group');
 const User = require('./models/signup');
 const path = require('path');
+const AWS = require('aws-sdk');
 
 const app = express();
 app.use(cors());

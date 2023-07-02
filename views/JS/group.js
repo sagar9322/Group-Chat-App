@@ -166,6 +166,3 @@ async function getUserList(groupid) {
         console.error('Error fetching user list:', error);
     }
 }
-
-
-

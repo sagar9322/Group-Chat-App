@@ -16,25 +16,32 @@ body {
   background-color: #f8f9fa;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .side-bar::-webkit-scrollbar {
-  width: 5px; /* Width of the scroll bar */
+  width: 5px;
+  /* Width of the scroll bar */
 }
 
 .side-bar::-webkit-scrollbar-track {
-  background: #f8f9fa; /* Background color of the scroll bar track */
+  background: #f8f9fa;
+  /* Background color of the scroll bar track */
 }
 
 .side-bar::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the scroll bar thumb */
-  border-radius: 4px; /* Rounded corners of the scroll bar thumb */
+  background-color: #888;
+  /* Color of the scroll bar thumb */
+  border-radius: 4px;
+  /* Rounded corners of the scroll bar thumb */
 }
 
 .side-bar::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Color of the scroll bar thumb on hover */
+  background-color: #555;
+  /* Color of the scroll bar thumb on hover */
 }
 
 .side-bar::-webkit-scrollbar-thumb:active {
-  background-color: #333; /* Color of the scroll bar thumb when active */
+  background-color: #333;
+  /* Color of the scroll bar thumb when active */
 }
 
 .side-bar .header {
@@ -65,7 +72,8 @@ body {
   padding: 20px;
   background-color: #49e2a2;
 }
-#manu{
+
+#manu {
   color: #ccc;
 }
 
@@ -77,10 +85,12 @@ body {
   text-align: left;
   cursor: pointer;
 }
-.active{
+
+.active {
   background-color: #4caf50;
 }
-li{
+
+li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,24 +118,30 @@ li{
 }
 
 .group-list::-webkit-scrollbar {
-  width: 5px; /* Width of the scroll bar */
+  width: 5px;
+  /* Width of the scroll bar */
 }
 
 .group-list::-webkit-scrollbar-track {
-  background: #f8f9fa; /* Background color of the scroll bar track */
+  background: #f8f9fa;
+  /* Background color of the scroll bar track */
 }
 
 .group-list::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the scroll bar thumb */
-  border-radius: 4px; /* Rounded corners of the scroll bar thumb */
+  background-color: #888;
+  /* Color of the scroll bar thumb */
+  border-radius: 4px;
+  /* Rounded corners of the scroll bar thumb */
 }
 
 .group-list::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Color of the scroll bar thumb on hover */
+  background-color: #555;
+  /* Color of the scroll bar thumb on hover */
 }
 
 .group-list::-webkit-scrollbar-thumb:active {
-  background-color: #333; /* Color of the scroll bar thumb when active */
+  background-color: #333;
+  /* Color of the scroll bar thumb when active */
 }
 
 .group-list li,
@@ -167,6 +183,7 @@ li{
   overflow-y: auto;
   background-color: #e5ddd5;
 }
+
 .message p {
   padding: 10px;
   background-color: #f1f1f1;
@@ -182,6 +199,7 @@ li{
 .other-user p {
   background-color: #d4d4d4;
 }
+
 .message {
   display: flex;
   align-items: flex-start;
@@ -191,16 +209,18 @@ li{
 .input-box {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   background-color: #fff;
 }
 
 .input-box input[type="text"] {
-  flex: 1;
   padding: 8px;
   margin-right: 10px;
+  margin-left: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 35%;
 }
 
 .input-box button {
@@ -208,6 +228,7 @@ li{
   background-color: #128c7e;
   color: #fff;
   border: none;
+  margin-right: auto;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -215,6 +236,7 @@ li{
 .hidden {
   display: none;
 }
+
 .current-user {
   justify-content: flex-end;
   margin-right: 10px;
@@ -295,16 +317,19 @@ li.active-list {
   margin-right: 10px;
 }
 
-.delete-member{
+.delete-member {
   font-size: 12px;
-display: flex;
-align-items: center;
-justify-content: center;
-padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0;
 }
-#request-pending, #invite-friend{
+
+#request-pending,
+#invite-friend {
   margin-top: 10px;
 }
+
 .home-message {
   height: 100vh;
   display: flex;
@@ -315,29 +340,35 @@ padding-bottom: 0;
   padding: 20px;
   background-color: #f2f2f2;
 }
+
 .content-msg h3 {
   font-size: 24px;
   font-weight: bold;
   font-family: 'Baloo 2', cursive;
-animation: fadeInUp 1s ease-in-out; /* Add animation */
+  animation: fadeInUp 1s ease-in-out;
+  /* Add animation */
 }
 
 .content-msg p {
   font-size: 16px;
   font-family: 'Baloo 2', cursive;
-animation: fadeInUp 1s ease-in-out; /* Add animation */
+  animation: fadeInUp 1s ease-in-out;
+  /* Add animation */
 }
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.content-msg{
+
+.content-msg {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -362,46 +393,93 @@ animation: fadeInUp 1s ease-in-out; /* Add animation */
   color: #2cb81f;
 }
 
-.arrows{
+.arrows {
   display: none;
 }
+
 .up-arrow,
-    .down-arrow {
+.down-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.up-arrow:hover,
+.down-arrow:hover {
+  background-color: #ccc;
+}
+
+.up-arrow::before {
+  content: '';
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  border-color: #333;
+  transform: rotate(-45deg);
+  width: 0.5em;
+  height: 0.5em;
+}
+
+.down-arrow::before {
+  content: '';
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  border-color: #333;
+  transform: rotate(135deg);
+  width: 0.5em;
+  height: 0.5em;
+}
+
+#invite-friend,
+#request-pending,
+.group-member {
+  display: none;
+}
+
+
+/* .input-box {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      background-color: #ddd;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+      padding: 10px;
+      background-color: #f5f5f5;
+    } */
 
-    .up-arrow:hover,
-    .down-arrow:hover {
-      background-color: #ccc;
-    }
+#fileInput {
+  margin-right: 10px;
+  width: 26%;
 
-    .up-arrow::before {
-      content: '';
-      border-style: solid;
-      border-width: 0.15em 0.15em 0 0;
-      border-color: #333;
-      transform: rotate(-45deg);
-      width: 0.5em;
-      height: 0.5em;
-    }
+}
 
-    .down-arrow::before {
-      content: '';
-      border-style: solid;
-      border-width: 0.15em 0.15em 0 0;
-      border-color: #333;
-      transform: rotate(135deg);
-      width: 0.5em;
-      height: 0.5em;
-    }
+#fileInput::file-selector-button {
+  padding: 5px 10px;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-    #invite-friend, #request-pending, .group-member{
-      display: none;
-    }
+#filInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+/* #fileInput::before {
+      content: 'Select File';
+    } */
+
+#fileInput:hover::before {
+  background-color: #ddd;
+}
+
+#fileInput:active::before {
+  background-color: #bbb;
+}
+
+#fileInput:focus::before {
+  outline: none;
+  box-shadow: 0 0 0 2px #ddd;
+}

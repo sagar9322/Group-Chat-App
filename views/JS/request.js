@@ -191,7 +191,4 @@ async function displayPendingRequests() {
         console.error('Error fetching pending requests:', err);
     }
 }
-// document.getElementById("request-pending").addEventListener('click', ()=> {
-//     displayPendingRequests();
-// })   
 displayPendingRequests();

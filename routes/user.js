@@ -4,6 +4,9 @@ const router = express.Router();
 
 const userAuthentication = require('../middleware/auth');
 const userChatController = require('../controllers/userchat');
+const filesystemController = require('../controllers/filesystem');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 
 router.post('/message', userAuthentication.authenticate, userChatController.submitChat);
@@ -18,5 +21,6 @@ router.post('/reject-request/:requestId', userChatController.deleteRequest);
 router.get('/userList', userChatController.getAllUserList);
 router.post('/make-admin', userAuthentication.authenticate, userChatController.makeAdmin);
 router.post('/delete', userAuthentication.authenticate, userChatController.deleteMember);
+router.post('/upload', upload.single('file'), filesystemController.uploadFileToAws); 
 
 module.exports = router;

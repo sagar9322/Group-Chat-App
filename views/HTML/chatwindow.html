@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Group Chat App</title>
   <link rel="stylesheet" type="text/css" href="../CSS/chatwindow.css">
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
 </head>
+
 <body>
   <div class="container">
     <div class="side-bar">
@@ -47,15 +50,18 @@
         <div class="message">
           <div class="home-message">
             <div class="content-msg">
-          <h3>Welcome to our Group Chat App!</h3>
-          <p>Join our vibrant community and connect with people from all around the world. Share ideas, have meaningful conversations, and make new friends.</p>
-        </div>
-      </div>
+              <h3>Welcome to our Group Chat App!</h3>
+              <p>Join our vibrant community and connect with people from all around the world. Share ideas, have
+                meaningful conversations, and make new friends.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="input-box hidden">
+        <input type="file" id="fileInput" />
+        <button id="file-btn" onclick="uploadFile()">Send File</button>
         <input type="text" id="message" placeholder="Type your message..." />
-        <button onclick="sendMessage(event)">Send</button>
+        <button onclick="sendMessage(event)">Send Message</button>
       </div>
     </div>
   </div>
@@ -86,7 +92,7 @@
     <h2>Pending Requests</h2>
     <div id="request-list">
       <!-- Request items will be dynamically added here -->
-      
+
     </div>
     <button type="button" id="delete-button-group-form">Close</button>
   </div>
@@ -96,5 +102,7 @@
   <script src="../JS/chatwindow.js"></script>
   <script src="../JS/group.js"></script>
   <script src="../JS/request.js"></script>
+  <script src="../JS/fileinput.js"></script>
 </body>
+
 </html>

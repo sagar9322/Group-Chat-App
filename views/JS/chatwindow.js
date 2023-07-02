@@ -52,9 +52,15 @@ socket.on('typing', (groupId, username) => {
 
 });
 
-async function sendMessage(event) {
+async function sendMessage(event, fileUrl) {
     event.preventDefault();
-    const message = document.getElementById('message').value;
+    let message
+    if (fileUrl) {
+        message = fileUrl;
+    } else {
+        message = document.getElementById('message').value;
+    }
+
     const groupId = localStorage.getItem('groupId');
 
     const token = localStorage.getItem("token");
@@ -67,7 +73,7 @@ async function sendMessage(event) {
         await axios.post('http://localhost:3000/message', { message: message, groupId: groupId }, { headers });
 
         document.getElementById('message').value = "";
-        // await getMessages(groupId);
+
         socket.emit('sendMessage', groupId, message); // Send the message to the server
     } catch (err) {
         console.error('Error Sending Chat:', err);
@@ -92,15 +98,15 @@ async function getMessages(groupId, direction) {
 
         const response = await axios.get(`http://localhost:3000/get-msg/${groupId}?page=${pageNumber}&limit=${pageSize}`);
         const { messages } = response.data;
-        if(pageNumber === 1){
+        if (pageNumber === 1) {
             document.querySelector('.down-arrow').style.display = "none";
         }
-        else{
+        else {
             document.querySelector('.down-arrow').style.display = "flex";
         }
-        if(messages.length === 0){
+        if (messages.length === 0) {
             document.querySelector('.up-arrow').style.display = "none";
-        }else{
+        } else {
             document.querySelector('.up-arrow').style.display = "flex";
         }
 
@@ -110,6 +116,7 @@ async function getMessages(groupId, direction) {
         messagesContainer.innerHTML = ''; // Clear existing messages
 
         messages.reverse().forEach(message => {
+
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
 
@@ -119,12 +126,48 @@ async function getMessages(groupId, direction) {
             } else {
                 messageElement.classList.add('other-user');
             }
+            const fileType = getFileType(`${message.message}`);
+            if (fileType === 'image') {
+                const imageMessage = document.createElement('div');
+                imageMessage.className = 'image-message';
 
-            const paragraphElement = document.createElement('p');
-            paragraphElement.textContent = `${message.username}: ${message.message}`;
+                const imageContent = document.createElement('div');
+                imageContent.className = 'content-msg';
 
-            messageElement.appendChild(paragraphElement);
+                imageContent.textContent = `${message.username}:`;
+                imageContent.style.fontWeight = 'bold';
+
+
+                const image = document.createElement('img');
+                image.src = message.message;
+
+
+                imageContent.appendChild(image);
+                imageMessage.appendChild(imageContent);
+                messageElement.appendChild(imageMessage);
+            } else if (fileType === 'video') {
+                const videoMessage = document.createElement('div');
+                videoMessage.className = 'video-message';
+
+                const videoContent = document.createElement('div');
+                videoContent.className = 'content-msg';
+
+                const video = document.createElement('video');
+                video.src = message.message;
+                video.controls = true;
+
+                videoContent.appendChild(video);
+                videoMessage.appendChild(videoContent);
+                messageElement.appendChild(videoMessage);
+            } else if (fileType === 'other') {
+                const paragraphElement = document.createElement('p');
+                paragraphElement.textContent = `${message.username}: ${message.message}`;
+
+                messageElement.appendChild(paragraphElement);
+
+            }
             messagesContainer.appendChild(messageElement);
+
         });
 
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -133,39 +176,22 @@ async function getMessages(groupId, direction) {
     }
 }
 
-// async function getMessages(groupId) {
-//     try {
-//         const response = await axios.get(`http://localhost:3000/get-msg/${groupId}`);
-//         filteredMessages = response.data.data.reverse();
+function getFileType(message) {
 
-//         const currentUser = localStorage.getItem('username');
-//         const messagesContainer = document.querySelector('.messages');
-//         messagesContainer.innerHTML = ''; // Clear existing messages
+    const extension = message.split('.').pop().toLowerCase();
 
-//         filteredMessages.forEach(message => {
-//             const messageElement = document.createElement('div');
-//             messageElement.classList.add('message');
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    const videoExtensions = ['mp4', 'mov', 'avi'];
 
-//             // Add sender class based on the username
-//             if (message.username === currentUser) {
-//                 messageElement.classList.add('current-user');
-//             } else {
-//                 messageElement.classList.add('other-user');
-//             }
+    if (imageExtensions.includes(extension)) {
+        return 'image';
+    } else if (videoExtensions.includes(extension)) {
+        return 'video';
+    }
 
-//             const paragraphElement = document.createElement('p');
-//             paragraphElement.textContent = `${message.username}: ${message.message}`;
+    return 'other';
+}
 
-//             messageElement.appendChild(paragraphElement);
-//             messagesContainer.appendChild(messageElement);
-//         });
-
-//         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-//     } catch (err) {
-//         console.error("something went wrong", err);
-//     }
-
-// }
 
 function toggleUserList() {
     const userList = document.querySelector('.user-list');
