@@ -1,3 +1,4 @@
+const socket = io.connect('http://localhost:3000');
 async function getUserDetail(event) {
     event.preventDefault();
     let email = document.getElementById('email-ip').value;
@@ -7,7 +8,6 @@ async function getUserDetail(event) {
         email: email,
         password: password
     }
-    console.log("coming");
 
     try {
         const response = await axios.post('http://localhost:3000/log-in', userDetails).then((response) => {
@@ -15,6 +15,8 @@ async function getUserDetail(event) {
             const token = response.data.token;
             localStorage.setItem("token", token);
             localStorage.setItem("username", response.data.username);
+            localStorage.setItem("email", response.data.email);
+            // socket.emit('signIn', response.data.username);
             window.location.href = "../HTML/chatwindow.html";
             
         });

@@ -14,7 +14,7 @@ const GroupMembers = sequelize.define('groups-member', {
     allowNull: false
   },
   memberId: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false
   },
   isAdmin: {

@@ -1,3 +1,12 @@
+
+
+socket.on('pending-req', (userEmail) => {
+    console.log("coming on client", userEmail);
+    const useremail = localStorage.getItem('email');
+    if (userEmail === useremail) {
+        window.alert("You have a new request. Check Your Pending Request");
+    }
+})
 // Function to show the create group form and blur the background
 function showRequestForm() {
     const requestForm = document.querySelector('.request-form');
@@ -42,7 +51,7 @@ async function getRequestUserList() {
                 const userItem = document.createElement('li');
                 const userCheckbox = document.createElement('input');
                 userCheckbox.type = 'checkbox';
-                userCheckbox.value = user.id;
+                userCheckbox.value = user.email;
                 userItem.textContent = user.name;
                 userItem.appendChild(userCheckbox);
                 userListContainer.appendChild(userItem);
@@ -60,8 +69,9 @@ async function getRequestUserList() {
 // Function to send request
 async function sendRequest(event) {
     event.preventDefault();
-    const checkedUserIds = Array.from(document.querySelectorAll('#user-list input[type="checkbox"]:checked'))
+    const checkedUserEmail = Array.from(document.querySelectorAll('#user-list input[type="checkbox"]:checked'))
         .map(checkbox => checkbox.value);
+
     const groupId = localStorage.getItem('groupId');
     const token = localStorage.getItem("token");
     const headers = {
@@ -72,8 +82,9 @@ async function sendRequest(event) {
 
     // Send the request with the checked user IDs
     try {
-        const response = await axios.post('http://localhost:3000/send-request', { users: checkedUserIds, groupId: groupId }, { headers });
+        const response = await axios.post('http://localhost:3000/send-request', { users: checkedUserEmail, groupId: groupId }, { headers });
         if (response.status === 200) {
+            socket.emit('pending-request', checkedUserEmail[0]);
             window.location.href = "/JS/chatwindow.js"
             location.reload();
         }
@@ -90,7 +101,7 @@ const inviteButton = document.getElementById('invite-button');
 inviteButton.addEventListener('click', sendRequest);
 
 // Call the getUserList function to populate the user list
-document.getElementById('invite-friend').addEventListener("click", ()=>{
+document.getElementById('invite-friend').addEventListener("click", () => {
     getRequestUserList();
 })
 
@@ -160,6 +171,7 @@ async function displayPendingRequests() {
         requestList.innerHTML = ''; // Clear existing requests
 
         requests.forEach((request) => {
+
             const requestItem = document.createElement('div');
             requestItem.classList.add('request-item');
 

@@ -388,9 +388,9 @@ li.active-list {
 }
 
 #typing-indicator {
-  margin-right: 10px;
+  margin-right: 300px;
   font-size: 12px;
-  color: #2cb81f;
+  color: whitesmoke;
 }
 
 .arrows {
@@ -435,18 +435,11 @@ li.active-list {
 }
 
 #invite-friend,
-#request-pending,
 .group-member {
   display: none;
 }
 
 
-/* .input-box {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      background-color: #f5f5f5;
-    } */
 
 #fileInput {
   margin-right: 10px;
@@ -466,10 +459,6 @@ li.active-list {
 #filInput::-webkit-file-upload-button {
   visibility: hidden;
 }
-
-/* #fileInput::before {
-      content: 'Select File';
-    } */
 
 #fileInput:hover::before {
   background-color: #ddd;

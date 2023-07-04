@@ -5,14 +5,13 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('groupId', null);
 });
 
-
-const groupId = localStorage.getItem('groupId');
-socket.emit('joinGroup', groupId);
+const groupId = Number(localStorage.getItem('groupId'));
+// socket.emit('joinGroup', groupId);
 
 
 socket.on('chat', (data) => {
-    const groupId = data.groupId;
-    if (groupId === localStorage.getItem('groupId')) {
+    const groupId = Number(data.groupId);
+    if (groupId === Number(localStorage.getItem('groupId'))) {
         getMessages(groupId);
     }
 });
@@ -23,9 +22,10 @@ socket.on('chat', (data) => {
 // Add event listener for the input field where the user types
 const inputField = document.getElementById('message');
 inputField.addEventListener('keyup', () => {
-    const groupId = localStorage.getItem('groupId');
+    const groupId = Number(localStorage.getItem('groupId'));
     const username = localStorage.getItem('username');
-    socket.emit('joinGroup', groupId);
+    
+   
     socket.emit('typingg', groupId, username);
 });
 
@@ -43,13 +43,17 @@ function debounce(func, timer) {
 
 // Listen for the typing event
 socket.on('typing', (groupId, username) => {
-    const typingIndicator = document.getElementById('typing-indicator');
+    const userGroupId = Number(localStorage.getItem('groupId'));
+    if(userGroupId === Number(groupId)){
+        const typingIndicator = document.getElementById('typing-indicator');
 
-    typingIndicator.textContent = `${username} is typing...`;
-    debounce(function () {
-        typingIndicator.textContent = '';
-    }, 1000);
-
+        typingIndicator.textContent = `${username} is typing...`;
+        debounce(function () {
+            typingIndicator.textContent = '';
+        }, 1000);
+    
+    }
+    
 });
 
 async function sendMessage(event, fileUrl) {
@@ -73,8 +77,9 @@ async function sendMessage(event, fileUrl) {
         await axios.post('http://localhost:3000/message', { message: message, groupId: groupId }, { headers });
 
         document.getElementById('message').value = "";
+        document.getElementById('message').focus();
 
-        socket.emit('sendMessage', groupId, message); // Send the message to the server
+        socket.emit('sendMessage', Number(groupId), message); // Send the message to the server
     } catch (err) {
         console.error('Error Sending Chat:', err);
     }

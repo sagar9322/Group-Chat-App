@@ -37,14 +37,14 @@ exports.getUserList = async (req, res, next) => {
             }
         });
         // Extract group IDs from members array
-        const memberIds = members.map(member => member.memberId);
+        const memberEmail = members.map(member => member.memberId);
         const admin = members.filter(member => member.isAdmin===true);
         
 
         // Fetch groups based on the extracted group IDs
         const member = await User.findAll({
             where: {
-                id: memberIds
+                email: memberEmail
             }
         });
 
@@ -94,7 +94,7 @@ exports.createGroup = async (req, res, next) => {
 
     await GroupMembers.create({
         groupId: response.id,
-        memberId: req.user.id,
+        memberId: req.user.email,
         isAdmin: true
     })
     if (response) {
@@ -106,7 +106,7 @@ exports.getGroupList = async (req, res, next) => {
     try {
         const members = await GroupMembers.findAll({
             where: {
-                memberId: req.user.id
+                memberId: req.user.email
             }
         });
         // Extract group IDs from members array
@@ -134,11 +134,11 @@ exports.storeRequest = async (req, res, next) => {
         }
     });
     try {
-        const createRequests = requestedUser.map(async (userId) => {
+        const createRequests = requestedUser.map(async (userEmail) => {
             await Request.create({
                 groupId: groupId,
                 groupName: group[0].groupName,
-                requestedUser: userId,
+                requestedUser: userEmail,
                 requestFrom: req.user.name
             });
         });
@@ -156,7 +156,7 @@ exports.checkPendingRequest = async (req, res, next) => {
     try {
         const pendingRequest = await Request.findAll({
             where: {
-                requestedUser: req.user.id
+                requestedUser: req.user.email
             }
         });
 
@@ -223,11 +223,11 @@ exports.getAllUserList = async (req, res, next)=> {
 
 exports.makeAdmin = async (req, res, next)=> {
     const groupId = req.body.groupId;
-    const userId = req.body.userId;
+    const userEmail = req.body.userEmail;
     try{
         const member = await GroupMembers.findOne({where: {
             groupId: groupId,
-            memberId: userId
+            memberId: userEmail
         }});
     
         await member.update({
@@ -242,11 +242,11 @@ exports.makeAdmin = async (req, res, next)=> {
 
 exports.deleteMember = async (req, res, next) => {
     const groupId = req.body.groupId;
-    const userId = req.body.userId;
+    const userEmail = req.body.userEmail;
     try{
         const member = await GroupMembers.findOne({where: {
             groupId: groupId,
-            memberId: userId
+            memberId: userEmail
         }});
     
         await member.destroy();

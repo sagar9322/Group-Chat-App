@@ -1,3 +1,4 @@
+// const socket = io.connect('http://localhost:3000');
 async function getGroupList() {
     const token = localStorage.getItem("token");
     const headers = {
@@ -117,7 +118,7 @@ async function getUserList(groupid) {
             if (user.id === superAdminId) {
                 userItem.textContent = `Super Admin: ${user.name}`;
             }
-            else if (adminid.includes(user.id)) {
+            else if (adminid.includes(user.email)) {
                 userItem.textContent = `Admin: ${user.name}`;
             } else {
                 userItem.textContent = user.name;
@@ -129,9 +130,9 @@ async function getUserList(groupid) {
                 const confirmDialog = confirm("Do you want to make him/her an admin?");
                 if (confirmDialog) {
                     const groupId = localStorage.getItem('groupId');
-                    const userId = user.id;
+                    const userEmail = user.email;
 
-                    await axios.post('http://localhost:3000/make-admin', { groupId: groupId, userId: userId }, {
+                    await axios.post('http://localhost:3000/make-admin', { groupId: groupId, userEmail: userEmail }, {
                         headers
                     });
 
@@ -148,9 +149,9 @@ async function getUserList(groupid) {
                 if (confirmDialog) {
                     try {
                         const groupId = localStorage.getItem('groupId');
-                        const userId = user.id;
+                        const userEmail = user.email;
                         // Send delete request to server
-                        await axios.post('http://localhost:3000/delete', { groupId: groupId, userId: user.id }, { headers });
+                        await axios.post('http://localhost:3000/delete', { groupId: groupId, userEmail: userEmail }, { headers });
 
                         // Remove the user element from the user list UI
                         userContainer.removeChild(userItem);
